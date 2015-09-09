@@ -1,0 +1,28 @@
+{
+    "cron": "0 * * * *",
+    "logs": [{
+        "name": "app",
+        "path": "log/yog/yog.log.%Y%m%d%H",
+        "reserveDays": 7
+    }, {
+        "name": "access",
+        "path": "log/access/access.log.%Y%m%d%H",
+        "reserveDays": 7
+    }, {
+        "name": "app-wf",
+        "path": "log/yog/yog.log.wf.%Y%m%d%H",
+        "reserveDays": 7
+    }, {
+        "name": "pm2-stdout",
+        "path": "pm2/logs/yog-out.log",
+        "autoRotate": true,
+        "rotatePath": "pm2/logs/yog-out.log.%Y%m%d%H",
+        "reserveDays": 7
+    }, {
+        "name": "pm2-stderr",
+        "path": "pm2/logs/yog-error.log",
+        "autoRotate": true,
+        "rotatePath": "pm2/logs/yog-error.log.%Y%m%d%H",
+        "reserveDays": 7
+    }]
+}
