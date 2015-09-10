@@ -1,0 +1,26 @@
+{
+    "port": "$PORT",
+    "portOffset": 1,
+    "logs": [{
+        "name": "app",
+        "path": "log/yog/yog.log.%Y%m%d%H"
+    }, {
+        "name": "access",
+        "path": "log/access/access.log.%Y%m%d%H"
+    }, {
+        "name": "app-wf",
+        "path": "log/yog/yog.log.wf.%Y%m%d%H"
+    }, {
+        "name": "pm2-stdout",
+        "path": "pm2/logs/yog-out.log"
+    }, {
+        "name": "pm2-stderr",
+        "path": "pm2/logs/yog-error.log"
+    }, {
+        "name": "pm2-stdout-history",
+        "path": "pm2/logs/yog-out.log.%Y%m%d%H"
+    }, {
+        "name": "pm2-stderr-history",
+        "path": "pm2/logs/yog-error.log.%Y%m%d%H"
+    }]
+}
