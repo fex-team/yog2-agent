@@ -8,8 +8,6 @@ var ts = require('tail-stream');
 var fs = require('fs');
 var path = require('path');
 var io = require('socket.io')(PORT);
-var byline = require('byline');
-require('socket.io-stream')(io);
 console.log('[yog2-agent] logview server is listening to', PORT);
 
 var logMap = LOGS.reduce(function (prev, current) {
