@@ -3,24 +3,31 @@
     "portOffset": 1,
     "logs": [{
         "name": "app",
-        "path": "log/yog/yog.log.%Y%m%d%H"
+        "path": "log/yog/yog.log.%Y%m%d%H",
+        "timePattern": "%y-%m-%d %H:%M"
     }, {
         "name": "access",
-        "path": "log/access/access.log.%Y%m%d%H"
+        "path": "log/access/access.log.%Y%m%d%H",
+        "timePattern": "%d/%b/%Y:%H:%M"
     }, {
         "name": "app-wf",
-        "path": "log/yog/yog.log.wf.%Y%m%d%H"
+        "path": "log/yog/yog.log.wf.%Y%m%d%H",
+        "timePattern": "%y-%m-%d %H:%M"
     }, {
         "name": "pm2-stdout",
-        "path": "pm2/logs/yog-out.log"
+        "path": "pm2/logs/yog-out.log",
+        "timePattern": "%Y-%m-%d %H:%M"
     }, {
         "name": "pm2-stderr",
-        "path": "pm2/logs/yog-error.log"
+        "path": "pm2/logs/yog-error.log",
+        "timePattern": "%Y-%m-%d %H:%M"
     }, {
         "name": "pm2-stdout-history",
-        "path": "pm2/logs/yog-out.log.%Y%m%d%H"
+        "path": "pm2/logs/yog-out.log.%Y%m%d%H",
+        "timePattern": "%Y-%m-%d %H:%M"
     }, {
         "name": "pm2-stderr-history",
-        "path": "pm2/logs/yog-error.log.%Y%m%d%H"
+        "path": "pm2/logs/yog-error.log.%Y%m%d%H",
+        "timePattern": "%Y-%m-%d %H:%M"
     }]
 }
