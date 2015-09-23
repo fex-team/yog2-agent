@@ -55,7 +55,7 @@ io.on('connection', function (socket) {
 
 function catLog(name, from, to, grep, excludeGrep, eventID, socket) {
     from = new Date(from);
-    to = new Date(new Date(to) + 60 * 1000);
+    to = new Date(to);
     var conf = logMap[name];
     var files = getFilesBetweenTime(conf.path, from, to);
     var fromPattern = strftime(conf.timePattern, from);

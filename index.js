@@ -42,7 +42,12 @@ function runPlugin(name) {
 function loadConf(name) {
     try {
         var execConf = [];
-        var conf = require(path.join(ROOT_PATH, name + '.json'));
+        try {
+            conf = require(path.join(ROOT_PATH, name + '.default.json'));
+        }
+        catch (e) {
+            conf = require(path.join(ROOT_PATH, name + '.json'));
+        }
         conf.root_path = ROOT_PATH;
         for (var key in conf) {
             if (conf.hasOwnProperty(key)) {
