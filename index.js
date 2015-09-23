@@ -43,10 +43,10 @@ function loadConf(name) {
     try {
         var execConf = [];
         try {
-            conf = require(path.join(ROOT_PATH, name + '.default.json'));
+            conf = require(path.join(ROOT_PATH, name + '.json'));
         }
         catch (e) {
-            conf = require(path.join(ROOT_PATH, name + '.json'));
+            conf = require(path.join(ROOT_PATH, name + '.default.json'));
         }
         conf.root_path = ROOT_PATH;
         for (var key in conf) {
