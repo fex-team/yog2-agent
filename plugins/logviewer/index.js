@@ -18,13 +18,19 @@ var logMap = LOGS.reduce(function (prev, current) {
 }, {});
 
 io.on('connection', function (socket) {
-    var logStreams = [];
+    var logStreams = {};
 
     console.log('[yog2-agent] logview client connected');
 
     socket.on('cat', function (message) {
         console.log('[yog2-agent] client request cat log');
         catLog(message.name, message.from, message.to, message.grep, message.excludeGrep, message.eventID, socket);
+    });
+
+    socket.on('endtail', function (message) {
+        console.log('[yog2-agent] client end tail log');
+        logStreams[message.name] && logStreams[message.name].end();
+        logStreams[message.name] = null;
     });
 
     socket.on('tail', function (message) {
@@ -37,7 +43,7 @@ io.on('connection', function (socket) {
             });
         }
         else {
-            logStreams.push(stream);
+            logStreams[message.name] = stream;
         }
     });
 
@@ -47,9 +53,9 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         console.log('[yog2-agent] logview client disconnected, close all logs');
-        logStreams.forEach(function (stream) {
-            stream.end();
-        });
+        for (var name in logStreams) {
+            logStreams[name].end && logStreams[name].end();
+        }
     });
 });
 
@@ -79,9 +85,14 @@ function catLog(name, from, to, grep, excludeGrep, eventID, socket) {
             return cb && cb(null);
         });
     }, function (err) {
-        console.log('[yog2-agent] grep log end');
+        console.log('[yog2-agent] grep log end with err', err);
         socket.emit(eventID, content);
     });
+}
+
+function safeRegExp(s) {
+    if (!s) return null;
+    return new RegExp(s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'));
 }
 
 function grepFile(path, fromPattern, toPattern, grep, excludeGrep, cb) {
@@ -89,7 +100,8 @@ function grepFile(path, fromPattern, toPattern, grep, excludeGrep, cb) {
     var fileStream = fs.createReadStream(path);
     var stream = byline.createStream(fileStream);
     var lines = [];
-    var r = new RegExp(grep);
+    var r = safeRegExp(grep);
+
     fileStream.on('error', function (error) {
         failed = true;
         stream.removeAllListeners();
@@ -135,7 +147,7 @@ function tailNewestLog(name, grep, excludeGrep, eventID, socket) {
     var conf = logMap[name];
     var logPath = path.join(ROOT_PATH, strftime(conf.path, now));
     var stream;
-    var r = new RegExp(grep);
+    var r = safeRegExp(grep);
     try {
         stream = ts.createReadStream(logPath, {
             beginAt: 'end',

@@ -29,7 +29,15 @@ function runPlugin(name) {
     var conf = loadConf(name)
     var pluginPath = path.join(PLUGINS_DIR, name, 'index.js');
     console.log('[yog2-agent] start plugin ' + name + ' with conf', conf);
-    var process = cp.fork(pluginPath, conf);
+    var process = cp.fork(pluginPath, conf, {
+        silent: true
+    });
+    process.stdout.on('data', function (data) {
+        console.log(data.toString());
+    });
+    process.stderr.on('data', function (data) {
+        console.error(data.toString());
+    });
     pluginProcesses[name] = process;
     process.on('close', function (code, signal) {
         console.warn('[yog2-agent] plugin ' + pluginPath + ' is exited with code ' + code + ' and signal ' + signal);
