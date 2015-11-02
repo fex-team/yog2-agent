@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
 
     socket.on('endtail', function (message) {
         console.log('[yog2-agent] client end tail log');
-        logStreams[message.name] && logStreams[message.name].end();
+        logStreams[message.name] && logStreams[message.name].end && logStreams[message.name].end();
         logStreams[message.name] = null;
     });
 
@@ -54,7 +54,7 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log('[yog2-agent] logview client disconnected, close all logs');
         for (var name in logStreams) {
-            logStreams[name].end && logStreams[name].end();
+            logStreams[name] && logStreams[name].end && logStreams[name].end();
         }
     });
 });

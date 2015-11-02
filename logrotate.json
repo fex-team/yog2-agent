@@ -24,5 +24,17 @@
         "autoRotate": true,
         "rotatePath": "pm2/logs/yog-error.log.%Y%m%d%H",
         "reserveDays": 7
+    }, {
+        "name": "agent-stdout",
+        "path": "pm2/logs/agent-out.log",
+        "autoRotate": true,
+        "rotatePath": "pm2/logs/agent-out.log.%Y%m%d%H",
+        "reserveDays": 7
+    }, {
+        "name": "agent-stderr",
+        "path": "pm2/logs/agent-error.log",
+        "autoRotate": true,
+        "rotatePath": "pm2/logs/agent-error.log.%Y%m%d%H",
+        "reserveDays": 7
     }]
 }
