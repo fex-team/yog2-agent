@@ -58,6 +58,7 @@ npm i yog2-agent --save
 
 #### 日志浏览配置
 
+```
 {
     "port": "$PORT",
     "portOffset": 1,
@@ -84,6 +85,7 @@ npm i yog2-agent --save
         "path": "pm2/logs/yog-error.log.%Y%m%d%H"
     }]
 }
+```
 
 ##### 配置项
 
