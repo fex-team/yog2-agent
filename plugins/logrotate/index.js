@@ -32,6 +32,10 @@ function rotateLogs(confs, done) {
         console.log('[yog2-agent] start rotate ' + logConf.name);
         fs.readFile(filePath, function (err, buffer) {
             // 保存文件至一个小时前的LOG中
+            if (err) {
+                console.error('[yog2-agent] read log failed', err.message);
+                return cb && cb(null);
+            }
             var newLogFilePath = createLogFileByDate(logConf.rotatePath, new Date((new Date()).getTime() - 1 * 60 * 60 * 1000));
             fs.stat(newLogFilePath, function (err) {
                 if (!err) {
@@ -40,6 +44,7 @@ function rotateLogs(confs, done) {
                 }
                 fs.writeFile(newLogFilePath, buffer, function (err) {
                     if (err) {
+                        console.error('[yog2-agent] write log failed', err.message);
                         return cb && cb(null);
                     }
                     console.log('[yog2-agent] rotate file ' + logConf.name, 'to', newLogFilePath);
