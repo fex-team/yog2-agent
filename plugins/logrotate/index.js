@@ -19,10 +19,6 @@ function LogRotate(conf) {
 
 LogRotate.prototype.start = function () {
     var me = this;
-    console.log('[yog2-logrotate] start clean logs');
-    me.rotateLogs(me.logs, function () {
-        me.cleanLogs(me.logs);
-    });
     schedule.scheduleJob(me.cron, function () {
         console.log('[yog2-logrotate] start clean logs');
         me.rotateLogs(me.logs, function () {
