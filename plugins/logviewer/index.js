@@ -122,7 +122,6 @@ LogViewer.prototype.tailNewestLog = function (msg, socket) {
 };
 
 LogViewer.prototype.catLog = function (msg, socket) {
-    var me = this;
     var from = new Date(msg.from);
     var to = new Date(msg.to);
     var maxLen = Math.max(msg.maxLen, 5000) || 500;
@@ -150,7 +149,7 @@ LogViewer.prototype.catLog = function (msg, socket) {
         });
     }, function (err) {
         console.log('[yog2-logviewer] grep log end with err', err);
-        socket.emit(me.eventID, content);
+        socket.emit(msg.eventID, content);
     });
 };
 
@@ -167,6 +166,7 @@ function grepFile(path, fromPattern, toPattern, grep, excludeGrep, maxLen, cb) {
     var lines = [];
     var r = safeRegExp(grep);
     var count = 0;
+    console.log('[yog2-logviewer] grep log', path);
     fileStream.on('error', function (error) {
         stream.removeAllListeners();
         console.log('[yog2-logviewer] log', path, 'not found');
@@ -182,12 +182,15 @@ function grepFile(path, fromPattern, toPattern, grep, excludeGrep, maxLen, cb) {
                 lines.push(line);
             }
             if (count >= maxLen) {
-                fileStream.end();
+                console.log('[yog2-logviewer] grep log', path, 'end');
+                stream.removeAllListeners();
+                cb && cb(null, lines);
+                break;
             }
         }
     });
     stream.on('end', function () {
-        console.log('[yog2-logviewer] grep log', path);
+        console.log('[yog2-logviewer] grep log', path, 'end');
         cb && cb(null, lines);
     });
 }
