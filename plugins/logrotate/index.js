@@ -115,7 +115,7 @@ LogRotate.prototype.getTargetLogs = function (pathPattern, reserveDays, cb) {
     var r = new RegExp(timePattern);
     var logDirPath = path.join(me.rootPath, path.dirname(pathPattern));
     var now = new Date();
-    var reserveDate = new Date(now - ONE_DAY);
+    var reserveDate = new Date(now - ONE_DAY * reserveDays);
     fs.readdir(logDirPath, function (err, files) {
         if (err) {
             return cb && cb(null);
