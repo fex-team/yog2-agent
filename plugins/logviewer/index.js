@@ -98,6 +98,7 @@ LogViewer.prototype.tailNewestLog = function (msg, socket) {
             var chunk = data.toString();
             var lines = chunk.split('\n');
             lines[0] = prevChunk + lines[0];
+            prevChunk = '';
             if (lines[lines.length - 1] !== '' && lines[lines.length - 1] !== '\n') {
                 // 说明结尾内容不是完整的一行
                 prevChunk = lines.pop();
