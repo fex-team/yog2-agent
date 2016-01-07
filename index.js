@@ -11,7 +11,7 @@ var getArgv = require('./lib/util.js').getArgv;
 var path = require('path');
 var PLUGINS_DIR = path.join(__dirname, 'plugins');
 var ROOT_PATH = getArgv('ROOT_PATH') || __dirname;
-// var RESTART_DELAY = 100;
+var CONF_PATH = getArgv('CONF_PATH') || ROOT_PATH;
 var fs = require('fs');
 // var cp = require('child_process');
 // var pluginProcesses = {};
@@ -30,10 +30,10 @@ function start() {
 function runPlugin(name) {
     var conf;
     try {
-        conf = require(path.join(ROOT_PATH, name + '.json'));
+        conf = require(path.join(CONF_PATH, name + '.json'));
     }
     catch (e) {
-        conf = require(path.join(ROOT_PATH, name + '.default.json'));
+        conf = require(path.join(CONF_PATH, name + '.default.json'));
     }
     conf.rootPath = ROOT_PATH;
     var pluginPath = path.join(PLUGINS_DIR, name, 'index.js');
