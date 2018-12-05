@@ -162,7 +162,7 @@ function safeRegExp(s) {
 }
 
 function grepFile(path, fromPattern, toPattern, grep, excludeGrep, maxLen, cb) {
-    var fileStream = fs.createReadStream(path);
+    var fileStream = fs.createReadStream(path, {encoding: 'utf8'});
     var stream = byline.createStream(fileStream);
     var lines = [];
     var r = safeRegExp(grep);
